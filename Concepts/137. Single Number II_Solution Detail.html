@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		.Dsc1 {
+			font-family: consolas;
+			font-size: 12pt;
+			padding: 0px;
+		}
+		
+		.Dsc2 {
+			font-family: 標楷體;
+			font-weight: bold;
+			font-size: 12pt;
+			color: #FF0000;
+			padding: 0px;
+		}
+		
+		html {
+			font-family: Helvetica, Arial, sans-serif, consolas;
+			font-size: 100%;
+			background: #333;
+			-webkit-font-smoothing: antialiased;
+		}
+		
+		#page-wrapper {
+			width: 640px;
+			background: #FFFFFF;
+			padding: 1em;
+			margin: 1em auto;
+			border-top: 5px solid #69c773;
+			box-shadow: 0 2px 10px rgba(0,0,0,0.8);
+		}
+		
+		details {
+			border-radius: 3px;
+			background: #EEE;
+			margin: 1em 0;
+		}
+		
+		summary {
+			background: #333;
+			color: #FFF;
+			border-radius: 3px;
+			padding: 5px 10px;
+			outline: none;
+		}
+		
+		details[open] summary {
+			background: #69c773;
+			color: #333;
+		}
+	</style>
+<title>137_Three Variable Detail</title>
+</head>
+<body>
+	<div id="page-wrapper">
+	<details>
+		<summary>三變數解</summary>
+		此法用3個整數來表示每個數出現次數的情况，one表示出現1次，two表示出現2次。當出現第3次時，該位數清空為0，則最後答案就是one的值。
+		<br />
+		<br />ones：　代表第i位只出現一次的變量
+		<br />twos：　代表第i位只出現兩次的變量
+		<br />threes：代表第i位只出現三次的變量
+		<br />
+		<br />
+		<p>假設現在有一個數字1，那麼我們更新one的方法就是XOR這個1，則one就變成了1；而two的更新方法是用前一個狀態下的one去AND數字1，然後OR這個結果。假如之前的one是1，那此時two也會變成1，這說明了目前檢查到第二個1了；反之，若之前的one是0，那麼現在的two也會是0。</p>
+		<p class="Dsc2">注意：更新的順序為先更新two，再更新one，可嘗試以只有一個數字1的數列演練一次。</p>
+		<br />然後我們更新three的狀態，如果此時one和two皆為1，由於我們先更新two，再更新one，two若為1，說明此時至少有兩個數字1；若one同時為1，則表示已經有了三個數字1。
+		<br />再來要仔細思考，因為one是XOR一個1後的結果，其值若為1即表示之前的one為0。實際情況是：當檢核到第二個1時，two先被更新成1，one再被更新為0，後面的three就是0了。而之後再AND上three的相反數1，並不會改變one和two的值；當第三個1出現時，two還是1，但此時的one已更新為1，接著three就被更新成1了。
+		<br />隨著three被更新為1，我們將one和two各別AND上three的相反數0，清空它們的值。經過一連串的計算後，最後的結果會保存在one中。
+	</details>
+	
+	<br />
+	
+	<details>
+		<summary>雙變數解</summary>
+		若我們把數列中數字的每一位加總起來對3取餘數，最後的結果就是那個單獨出現的數字。由於我們加總的過程都要對3取餘數，則每一位上加總的轉換過程就是0->1->2->0，換成二進位表示為00->01->10->00，因此我们可以寫出對應關系：
+		<br />
+		<br />00 (+) 1 = 01
+		<br />01 (+) 1 = 10
+		<br />10 (+) 1 = 00 ( mod 3)
+		<br />
+		<br />
+		那麼我們用a b來表示開始的狀態，加1操作後得a b新狀態的算法如下：
+		<br />
+		<br />b = b XOR r & ~a;
+		<br />a = a XOR r & ~b;
+		<p>此處的a b就是上述三種狀態00，01，10的十位數和個位數。一開始的a和b都是0，此時遇到數字1，b更新為1，a更新為0，就是01的狀態；再次遇到1的時候，b更新為0，a更新為1，就是10的狀態；再次遇到1的時候，b跟a皆更新為0，即為00的狀態，相當於重置；最後的結果會存在b之中。</p>
+	</details>
+	</div>
+</body>
+</html>
