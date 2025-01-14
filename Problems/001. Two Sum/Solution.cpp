@@ -1,5 +1,5 @@
-#include <unordered_map>
-#include <vector>
+#include <bits/stdc++.h>
+using namespace std;
 
 // Runtime 2ms
 class Solution {

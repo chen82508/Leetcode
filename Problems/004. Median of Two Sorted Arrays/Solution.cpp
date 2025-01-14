@@ -1,4 +1,5 @@
-#include <vector>
+#include <bits/stdc++.h>
+using namespace std;
 
 class Solution {
 public :
@@ -22,13 +23,13 @@ public :
             int nums2_LeftMax = j == 0 ? INT_MIN : nums2[j - 1];
             int nums2_RightMin = j == n ? INT_MAX : nums2[j];
             
-            if (nums1LeftMax <= nums2RightMin && nums2LeftMax <= nums1RightMin) {
+            if (nums1_LeftMax <= nums2_RightMin && nums2_LeftMax <= nums1_RightMin) {
                 if ((m + n) % 2 == 1) {
-                    return max(nums1LeftMax, nums2LeftMax);
+                    return max(nums1_LeftMax, nums2_LeftMax);
                 } else {
-                    return (max(nums1LeftMax, nums2LeftMax) + min(nums1RightMin, nums2RightMin)) / 2.0;
+                    return (max(nums1_LeftMax, nums2_LeftMax) + min(nums1_RightMin, nums2_RightMin)) / 2.0;
                 }
-            } else if (nums1LeftMax > nums2RightMin) {
+            } else if (nums1_LeftMax > nums2_RightMin) {
                 right = i - 1;
             } else {
                 left = i + 1;
