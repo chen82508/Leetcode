@@ -8,7 +8,7 @@ public :
         const int n = nums2.size() ;
         
         if (m > n) {
-            findMedianSortedArrays(nums2, nums1);
+            return findMedianSortedArrays(nums2, nums1);
         }
 
         int left = 0, right = m;
